@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="06b5234f61cd4e2abea441b5f1a1777e" Name="Diagram1">
+        <EntityTypeShape EntityType="MyPCModel.Client" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Diagnostic" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Master" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Material" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Problem" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Repair" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.TypeDevice" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.TypeMaterial" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Work" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="MyPCModel.FK_Repair_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Diagnostics_Problem" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Diagnostics_Repair" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Repair_Master" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Material_TypeMaterial" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Work_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Repair_TypeDevice" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Work_Repair1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
