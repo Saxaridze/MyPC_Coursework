@@ -17,18 +17,19 @@ namespace MyPC.BD_MyPC
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Material()
         {
-            this.Works = new HashSet<Work>();
+            this.OrderingMaterials = new HashSet<OrderingMaterial>();
         }
     
         public int ID { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> Cost { get; set; }
         public Nullable<int> ID_TypeMaterial { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<double> Purchase_price { get; set; }
+        public Nullable<double> Retail_price { get; set; }
         public string Photo { get; set; }
     
         public virtual TypeMaterial TypeMaterial { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Work> Works { get; set; }
+        public virtual ICollection<OrderingMaterial> OrderingMaterials { get; set; }
     }
 }

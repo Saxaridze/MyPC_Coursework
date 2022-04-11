@@ -12,26 +12,21 @@ namespace MyPC.BD_MyPC
     using System;
     using System.Collections.Generic;
     
-    public partial class Repair
+    public partial class OrderingMaterial
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Repair()
+        public OrderingMaterial()
         {
             this.Orders = new HashSet<Order>();
         }
     
         public int ID { get; set; }
-        public Nullable<int> WorkOrder { get; set; }
-        public Nullable<System.DateTime> DateEvent { get; set; }
-        public Nullable<int> ID_Client { get; set; }
-        public Nullable<int> ID_Master { get; set; }
-        public Nullable<int> ID_TypeDevice { get; set; }
-        public string Information { get; set; }
+        public Nullable<int> Code { get; set; }
+        public Nullable<int> ID_Material { get; set; }
+        public string Description { get; set; }
     
-        public virtual Client Client { get; set; }
-        public virtual Master Master { get; set; }
+        public virtual Material Material { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual TypeDevice TypeDevice { get; set; }
     }
 }

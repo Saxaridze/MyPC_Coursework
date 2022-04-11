@@ -12,13 +12,18 @@ namespace MyPC.BD_MyPC
     using System;
     using System.Collections.Generic;
     
-    public partial class Diagnostic
+    public partial class Order
     {
         public int ID { get; set; }
-        public Nullable<int> ID_Problem { get; set; }
         public Nullable<int> ID_Repair { get; set; }
+        public Nullable<int> ID_Problem { get; set; }
+        public Nullable<int> ID_OrderingMaterial { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<int> ID_Status { get; set; }
     
+        public virtual OrderingMaterial OrderingMaterial { get; set; }
         public virtual Problem Problem { get; set; }
         public virtual Repair Repair { get; set; }
+        public virtual Status Status { get; set; }
     }
 }

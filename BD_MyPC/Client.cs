@@ -21,9 +21,10 @@ namespace MyPC.BD_MyPC
         }
     
         public int ID { get; set; }
-        public string FullName { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string Patronymic { get; set; }
         public string ContactData { get; set; }
-        public Nullable<double> Discount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Repair> Repairs { get; set; }

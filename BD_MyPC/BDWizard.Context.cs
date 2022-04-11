@@ -13,26 +13,35 @@ namespace MyPC.BD_MyPC
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MyPCEntities : DbContext
+    public partial class MyPCEntities2 : DbContext
     {
-        public MyPCEntities()
-            : base("name=MyPCEntities")
+        private static MyPCEntities2 context;
+
+        public MyPCEntities2()
+            : base("name=MyPCEntities2")
         {
         }
-    
+        static public MyPCEntities2 GetContext()
+        {
+            if (context == null)
+                context = new MyPCEntities2();
+            return context;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<Client> Clients { get; set; }
-        public virtual DbSet<Diagnostic> Diagnostics { get; set; }
         public virtual DbSet<Master> Masters { get; set; }
         public virtual DbSet<Material> Materials { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderingMaterial> OrderingMaterials { get; set; }
         public virtual DbSet<Problem> Problems { get; set; }
         public virtual DbSet<Repair> Repairs { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<TypeDevice> TypeDevices { get; set; }
         public virtual DbSet<TypeMaterial> TypeMaterials { get; set; }
-        public virtual DbSet<Work> Works { get; set; }
     }
 }

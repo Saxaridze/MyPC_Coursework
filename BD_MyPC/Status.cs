@@ -12,14 +12,18 @@ namespace MyPC.BD_MyPC
     using System;
     using System.Collections.Generic;
     
-    public partial class Work
+    public partial class Status
     {
-        public int ID { get; set; }
-        public Nullable<int> ID_Repair { get; set; }
-        public Nullable<int> ID_Material { get; set; }
-        public Nullable<int> Quantity { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Status()
+        {
+            this.Orders = new HashSet<Order>();
+        }
     
-        public virtual Material Material { get; set; }
-        public virtual Repair Repair { get; set; }
+        public int ID { get; set; }
+        public string Title { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace MyPC.BD_MyPC
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Problem()
         {
-            this.Diagnostics = new HashSet<Diagnostic>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int ID { get; set; }
@@ -25,6 +25,6 @@ namespace MyPC.BD_MyPC
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Diagnostic> Diagnostics { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

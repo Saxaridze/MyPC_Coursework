@@ -67,6 +67,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ImagesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,53 +79,67 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BD_MyPC\Client.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+    <Compile Include="BD_MyPC\BDWizard.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDWizard.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="BD_MyPC\Diagnostic.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+    <Compile Include="BD_MyPC\BDWizard.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDWizard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BD_MyPC\BDWizard.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDWizard.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="BD_MyPC\Client.cs">
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="BD_MyPC\Master.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="BD_MyPC\Material.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
-    <Compile Include="BD_MyPC\MyPC.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyPC.Context.tt</DependentUpon>
+    <Compile Include="BD_MyPC\Order.cs">
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
-    <Compile Include="BD_MyPC\MyPC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyPC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BD_MyPC\MyPC.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MyPC.edmx</DependentUpon>
+    <Compile Include="BD_MyPC\OrderingMaterial.cs">
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="BD_MyPC\Problem.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="BD_MyPC\Repair.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+      <DependentUpon>BDWizard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BD_MyPC\Status.cs">
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="BD_MyPC\TypeDevice.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="BD_MyPC\TypeMaterial.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BD_MyPC\Work.cs">
-      <DependentUpon>MyPC.tt</DependentUpon>
+      <DependentUpon>BDWizard.tt</DependentUpon>
     </Compile>
     <Compile Include="Class\Meneger.cs" />
+    <Compile Include="ImagesWindow.xaml.cs">
+      <DependentUpon>ImagesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\PageAddClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PageLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,13 +148,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\PageRepair.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\PageAddClient.xaml.cs">
+      <DependentUpon>PageAddClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageClient.xaml.cs">
+      <DependentUpon>PageClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PageLogin.xaml.cs">
       <DependentUpon>PageLogin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageMain.xaml.cs">
       <DependentUpon>PageMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageRepair.xaml.cs">
+      <DependentUpon>PageRepair.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -155,12 +186,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="BD_MyPC\MyPC.edmx">
+    <EntityDeploy Include="BD_MyPC\BDWizard.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyPC.Designer.cs</LastGenOutput>
+      <LastGenOutput>BDWizard.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="BD_MyPC\MyPC.edmx.diagram">
-      <DependentUpon>MyPC.edmx</DependentUpon>
+    <None Include="BD_MyPC\BDWizard.edmx.diagram">
+      <DependentUpon>BDWizard.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -171,20 +202,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="BD_MyPC\MyPC.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MyPC.Context.cs</LastGenOutput>
-      <DependentUpon>MyPC.edmx</DependentUpon>
-    </Content>
-    <Content Include="BD_MyPC\MyPC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MyPC.edmx</DependentUpon>
-      <LastGenOutput>MyPC.cs</LastGenOutput>
-    </Content>
     <Resource Include="mini_logo.jpg" />
-    <Resource Include="Resources\logo.jpg" />
     <Resource Include="Resources\mini_logo.jpg" />
     <Resource Include="Resources\01.jpg" />
     <Resource Include="Resources\010.jpg" />
@@ -247,6 +266,21 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Wizard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BD_MyPC\BDWizard.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BDWizard.edmx</DependentUpon>
+      <LastGenOutput>BDWizard.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="BD_MyPC\BDWizard.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BDWizard.edmx</DependentUpon>
+      <LastGenOutput>BDWizard.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
