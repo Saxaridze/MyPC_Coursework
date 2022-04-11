@@ -1,0 +1,69 @@
+﻿<Page x:Class="MyPC.Pages.PageClient"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MyPC.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Клиенты" IsVisibleChanged="Page_IsVisibleChanged">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="StackLetters" Orientation="Horizontal" Background="{StaticResource ColorMain}">
+            <TextBlock FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="10" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" >Все</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Background="{StaticResource ColorMain}" Grid.Row="1">
+            <TextBlock>FIO</TextBlock>
+            <TextBox x:Name="TxtName" TextChanged="TxtName_TextChanged"></TextBox>
+            <TextBlock>ContactData</TextBlock>
+            <TextBox x:Name="TxtContactData" TextChanged="TxtContactData_TextChanged"></TextBox>
+        </StackPanel>
+        <DataGrid Grid.Row="2" x:Name="DataClient" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Patronymic" Binding="{Binding Patronymic}"></DataGridTextColumn>
+                <DataGridTextColumn Header="ContactData" Binding="{Binding ContactData}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Редактирование">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="BtnEditClient" Click="BtnEditClient_Click"  FontFamily="Tahoma" Background="#FFD30B0B">Изменить</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Background="{StaticResource ColorMain}">
+            <Button x:Name="BtnAddClient" Click="BtnAddClient_Click"  Style="{StaticResource MenuButton}">Добавить</Button>
+            <Button x:Name="BtnDeleteClient" Click="BtnDeleteClient_Click"  Style="{StaticResource MenuButton}">Удалить</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Background="{StaticResource ColorMain}">
+            <StackPanel Orientation="Vertical" Grid.Row="2">
+                <ComboBox x:Name="cmbSelectCount" SelectionChanged="cmbSelectCount_SelectionChanged"  Margin="5" Width="100">
+                    <ComboBoxItem IsSelected="True">
+                        <TextBlock>10</TextBlock>
+                    </ComboBoxItem>
+                    <TextBlock>50</TextBlock>
+                    <TextBlock>200</TextBlock>
+                    <TextBlock>Все</TextBlock>
+                </ComboBox>
+                <Button x:Name="showRecord" Click="showRecord_Click"  Content="Показать" Style="{StaticResource MenuButton}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="PrevPage" Click="PrevPage_Click"  Content="Предыдущая страница" Style="{StaticResource MenuButton}" Width="220"></Button>
+                <TextBlock x:Name="CurrentPage"></TextBlock>
+                <Button x:Name="NextPage" Click="NextPage_Click"  Content="Следующая страница" Style="{StaticResource MenuButton}" Width="220"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="Records"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

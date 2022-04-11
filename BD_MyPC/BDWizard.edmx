@@ -10,17 +10,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ContactData" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Discount" Type="float" />
-        </EntityType>
-        <EntityType Name="Diagnostics">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Problem" Type="int" />
-          <Property Name="ID_Repair" Type="int" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContactData" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Master">
           <Key>
@@ -40,11 +33,32 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="1000" />
-          <Property Name="Description" Type="text" />
-          <Property Name="Cost" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="2000" />
           <Property Name="ID_TypeMaterial" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Purchase_price" Type="float" />
+          <Property Name="Retail_price" Type="float" />
           <Property Name="Photo" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Repair" Type="int" />
+          <Property Name="ID_Problem" Type="int" />
+          <Property Name="ID_OrderingMaterial" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="ID_Status" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderingMaterial">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="int" />
+          <Property Name="ID_Material" Type="int" />
+          <Property Name="Description" Type="text" />
         </EntityType>
         <EntityType Name="Problem">
           <Key>
@@ -59,11 +73,19 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkOrder" Type="int" />
           <Property Name="DateEvent" Type="date" />
           <Property Name="ID_Client" Type="int" />
           <Property Name="ID_Master" Type="int" />
           <Property Name="ID_TypeDevice" Type="int" />
           <Property Name="Information" Type="text" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TypeDevice">
           <Key>
@@ -81,39 +103,6 @@
           <Property Name="TypeM" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="text" />
         </EntityType>
-        <EntityType Name="Work">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Repair" Type="int" />
-          <Property Name="ID_Material" Type="int" />
-          <Property Name="Quantity" Type="int" />
-        </EntityType>
-        <Association Name="FK_Diagnostics_Problem">
-          <End Role="Problem" Type="Self.Problem" Multiplicity="0..1" />
-          <End Role="Diagnostics" Type="Self.Diagnostics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Problem">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Diagnostics">
-              <PropertyRef Name="ID_Problem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Diagnostics_Repair">
-          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
-          <End Role="Diagnostics" Type="Self.Diagnostics" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Repair">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Diagnostics">
-              <PropertyRef Name="ID_Repair" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Material_TypeMaterial">
           <End Role="TypeMaterial" Type="Self.TypeMaterial" Multiplicity="0..1" />
           <End Role="Material" Type="Self.Material" Multiplicity="*" />
@@ -123,6 +112,66 @@
             </Principal>
             <Dependent Role="Material">
               <PropertyRef Name="ID_TypeMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderingMaterial">
+          <End Role="OrderingMaterial" Type="Self.OrderingMaterial" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderingMaterial">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_OrderingMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Problem">
+          <End Role="Problem" Type="Self.Problem" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Problem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Repair">
+          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repair">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderingMaterial_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
+          <End Role="OrderingMaterial" Type="Self.OrderingMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderingMaterial">
+              <PropertyRef Name="ID_Material" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -162,51 +211,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Work_Material">
-          <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
-          <End Role="Work" Type="Self.Work" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Material">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Work">
-              <PropertyRef Name="ID_Material" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Work_Repair1">
-          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
-          <End Role="Work" Type="Self.Work" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Repair">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Work">
-              <PropertyRef Name="ID_Repair" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Хранилище MyPCModelContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Diagnostics" EntityType="Self.Diagnostics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Master" EntityType="Self.Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderingMaterial" EntityType="Self.OrderingMaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Problem" EntityType="Self.Problem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Repair" EntityType="Self.Repair" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeDevice" EntityType="Self.TypeDevice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeMaterial" EntityType="Self.TypeMaterial" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Work" EntityType="Self.Work" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Diagnostics_Problem" Association="Self.FK_Diagnostics_Problem">
-            <End Role="Problem" EntitySet="Problem" />
-            <End Role="Diagnostics" EntitySet="Diagnostics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Diagnostics_Repair" Association="Self.FK_Diagnostics_Repair">
-            <End Role="Repair" EntitySet="Repair" />
-            <End Role="Diagnostics" EntitySet="Diagnostics" />
-          </AssociationSet>
           <AssociationSet Name="FK_Material_TypeMaterial" Association="Self.FK_Material_TypeMaterial">
             <End Role="TypeMaterial" EntitySet="TypeMaterial" />
             <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderingMaterial" Association="Self.FK_Order_OrderingMaterial">
+            <End Role="OrderingMaterial" EntitySet="OrderingMaterial" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Problem" Association="Self.FK_Order_Problem">
+            <End Role="Problem" EntitySet="Problem" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Repair" Association="Self.FK_Order_Repair">
+            <End Role="Repair" EntitySet="Repair" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderingMaterial_Material" Association="Self.FK_OrderingMaterial_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="OrderingMaterial" EntitySet="OrderingMaterial" />
           </AssociationSet>
           <AssociationSet Name="FK_Repair_Client" Association="Self.FK_Repair_Client">
             <End Role="Client" EntitySet="Client" />
@@ -220,14 +258,6 @@
             <End Role="TypeDevice" EntitySet="TypeDevice" />
             <End Role="Repair" EntitySet="Repair" />
           </AssociationSet>
-          <AssociationSet Name="FK_Work_Material" Association="Self.FK_Work_Material">
-            <End Role="Material" EntitySet="Material" />
-            <End Role="Work" EntitySet="Work" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Work_Repair1" Association="Self.FK_Work_Repair1">
-            <End Role="Repair" EntitySet="Repair" />
-            <End Role="Work" EntitySet="Work" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -239,20 +269,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ContactData" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Discount" Type="Double" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContactData" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Repairs" Relationship="Self.FK_Repair_Client" FromRole="Client" ToRole="Repair" />
-        </EntityType>
-        <EntityType Name="Diagnostic">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Problem" Type="Int32" />
-          <Property Name="ID_Repair" Type="Int32" />
-          <NavigationProperty Name="Problem" Relationship="Self.FK_Diagnostics_Problem" FromRole="Diagnostics" ToRole="Problem" />
-          <NavigationProperty Name="Repair" Relationship="Self.FK_Diagnostics_Repair" FromRole="Diagnostics" ToRole="Repair" />
         </EntityType>
         <EntityType Name="Master">
           <Key>
@@ -273,13 +294,40 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Cost" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ID_TypeMaterial" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Purchase_price" Type="Double" />
+          <Property Name="Retail_price" Type="Double" />
           <Property Name="Photo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TypeMaterial" Relationship="Self.FK_Material_TypeMaterial" FromRole="Material" ToRole="TypeMaterial" />
-          <NavigationProperty Name="Works" Relationship="Self.FK_Work_Material" FromRole="Material" ToRole="Work" />
+          <NavigationProperty Name="OrderingMaterials" Relationship="Self.FK_OrderingMaterial_Material" FromRole="Material" ToRole="OrderingMaterial" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Repair" Type="Int32" />
+          <Property Name="ID_Problem" Type="Int32" />
+          <Property Name="ID_OrderingMaterial" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="ID_Status" Type="Int32" />
+          <NavigationProperty Name="OrderingMaterial" Relationship="Self.FK_Order_OrderingMaterial" FromRole="Order" ToRole="OrderingMaterial" />
+          <NavigationProperty Name="Problem" Relationship="Self.FK_Order_Problem" FromRole="Order" ToRole="Problem" />
+          <NavigationProperty Name="Repair" Relationship="Self.FK_Order_Repair" FromRole="Order" ToRole="Repair" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Order_Status" FromRole="Order" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="OrderingMaterial">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Int32" />
+          <Property Name="ID_Material" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_OrderingMaterial_Material" FromRole="OrderingMaterial" ToRole="Material" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_OrderingMaterial" FromRole="OrderingMaterial" ToRole="Order" />
         </EntityType>
         <EntityType Name="Problem">
           <Key>
@@ -288,23 +336,31 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Diagnostics" Relationship="Self.FK_Diagnostics_Problem" FromRole="Problem" ToRole="Diagnostics" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Problem" FromRole="Problem" ToRole="Order" />
         </EntityType>
         <EntityType Name="Repair">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkOrder" Type="Int32" />
           <Property Name="DateEvent" Type="DateTime" Precision="0" />
           <Property Name="ID_Client" Type="Int32" />
           <Property Name="ID_Master" Type="Int32" />
           <Property Name="ID_TypeDevice" Type="Int32" />
           <Property Name="Information" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Repair_Client" FromRole="Repair" ToRole="Client" />
-          <NavigationProperty Name="Diagnostics" Relationship="Self.FK_Diagnostics_Repair" FromRole="Repair" ToRole="Diagnostics" />
           <NavigationProperty Name="Master" Relationship="Self.FK_Repair_Master" FromRole="Repair" ToRole="Master" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Repair" FromRole="Repair" ToRole="Order" />
           <NavigationProperty Name="TypeDevice" Relationship="Self.FK_Repair_TypeDevice" FromRole="Repair" ToRole="TypeDevice" />
-          <NavigationProperty Name="Works" Relationship="Self.FK_Work_Repair1" FromRole="Repair" ToRole="Work" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Status" FromRole="Status" ToRole="Order" />
         </EntityType>
         <EntityType Name="TypeDevice">
           <Key>
@@ -324,17 +380,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Materials" Relationship="Self.FK_Material_TypeMaterial" FromRole="TypeMaterial" ToRole="Material" />
         </EntityType>
-        <EntityType Name="Work">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Repair" Type="Int32" />
-          <Property Name="ID_Material" Type="Int32" />
-          <Property Name="Quantity" Type="Int32" />
-          <NavigationProperty Name="Material" Relationship="Self.FK_Work_Material" FromRole="Work" ToRole="Material" />
-          <NavigationProperty Name="Repair" Relationship="Self.FK_Work_Repair1" FromRole="Work" ToRole="Repair" />
-        </EntityType>
         <Association Name="FK_Repair_Client">
           <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
           <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
@@ -344,30 +389,6 @@
             </Principal>
             <Dependent Role="Repair">
               <PropertyRef Name="ID_Client" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Diagnostics_Problem">
-          <End Role="Problem" Type="Self.Problem" Multiplicity="0..1" />
-          <End Role="Diagnostics" Type="Self.Diagnostic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Problem">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Diagnostics">
-              <PropertyRef Name="ID_Problem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Diagnostics_Repair">
-          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
-          <End Role="Diagnostics" Type="Self.Diagnostic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Repair">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Diagnostics">
-              <PropertyRef Name="ID_Repair" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -395,15 +416,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Work_Material">
+        <Association Name="FK_OrderingMaterial_Material">
           <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
-          <End Role="Work" Type="Self.Work" Multiplicity="*" />
+          <End Role="OrderingMaterial" Type="Self.OrderingMaterial" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Material">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Work">
+            <Dependent Role="OrderingMaterial">
               <PropertyRef Name="ID_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderingMaterial">
+          <End Role="OrderingMaterial" Type="Self.OrderingMaterial" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderingMaterial">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_OrderingMaterial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Problem">
+          <End Role="Problem" Type="Self.Problem" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Problem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Problem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Repair">
+          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repair">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -419,39 +488,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Work_Repair1">
-          <End Role="Repair" Type="Self.Repair" Multiplicity="0..1" />
-          <End Role="Work" Type="Self.Work" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Repair">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Work">
-              <PropertyRef Name="ID_Repair" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="MyPCEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MyPCEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Clients" EntityType="Self.Client" />
-          <EntitySet Name="Diagnostics" EntityType="Self.Diagnostic" />
           <EntitySet Name="Masters" EntityType="Self.Master" />
           <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderingMaterials" EntityType="Self.OrderingMaterial" />
           <EntitySet Name="Problems" EntityType="Self.Problem" />
           <EntitySet Name="Repairs" EntityType="Self.Repair" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="TypeDevices" EntityType="Self.TypeDevice" />
           <EntitySet Name="TypeMaterials" EntityType="Self.TypeMaterial" />
-          <EntitySet Name="Works" EntityType="Self.Work" />
           <AssociationSet Name="FK_Repair_Client" Association="Self.FK_Repair_Client">
             <End Role="Client" EntitySet="Clients" />
             <End Role="Repair" EntitySet="Repairs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Diagnostics_Problem" Association="Self.FK_Diagnostics_Problem">
-            <End Role="Problem" EntitySet="Problems" />
-            <End Role="Diagnostics" EntitySet="Diagnostics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Diagnostics_Repair" Association="Self.FK_Diagnostics_Repair">
-            <End Role="Repair" EntitySet="Repairs" />
-            <End Role="Diagnostics" EntitySet="Diagnostics" />
           </AssociationSet>
           <AssociationSet Name="FK_Repair_Master" Association="Self.FK_Repair_Master">
             <End Role="Master" EntitySet="Masters" />
@@ -461,17 +511,29 @@
             <End Role="TypeMaterial" EntitySet="TypeMaterials" />
             <End Role="Material" EntitySet="Materials" />
           </AssociationSet>
-          <AssociationSet Name="FK_Work_Material" Association="Self.FK_Work_Material">
+          <AssociationSet Name="FK_OrderingMaterial_Material" Association="Self.FK_OrderingMaterial_Material">
             <End Role="Material" EntitySet="Materials" />
-            <End Role="Work" EntitySet="Works" />
+            <End Role="OrderingMaterial" EntitySet="OrderingMaterials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderingMaterial" Association="Self.FK_Order_OrderingMaterial">
+            <End Role="OrderingMaterial" EntitySet="OrderingMaterials" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Problem" Association="Self.FK_Order_Problem">
+            <End Role="Problem" EntitySet="Problems" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Repair" Association="Self.FK_Order_Repair">
+            <End Role="Repair" EntitySet="Repairs" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Repair_TypeDevice" Association="Self.FK_Repair_TypeDevice">
             <End Role="TypeDevice" EntitySet="TypeDevices" />
             <End Role="Repair" EntitySet="Repairs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Work_Repair1" Association="Self.FK_Work_Repair1">
-            <End Role="Repair" EntitySet="Repairs" />
-            <End Role="Work" EntitySet="Works" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -479,23 +541,15 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище MyPCModelContainer" CdmEntityContainer="MyPCEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MyPCModelContainer" CdmEntityContainer="MyPCEntities2">
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="MyPCModel.Client">
               <MappingFragment StoreEntitySet="Client">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="ContactData" ColumnName="ContactData" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Diagnostics">
-            <EntityTypeMapping TypeName="MyPCModel.Diagnostic">
-              <MappingFragment StoreEntitySet="Diagnostics">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ID_Problem" ColumnName="ID_Problem" />
-                <ScalarProperty Name="ID_Repair" ColumnName="ID_Repair" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -518,10 +572,33 @@
               <MappingFragment StoreEntitySet="Material">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="ID_TypeMaterial" ColumnName="ID_TypeMaterial" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Purchase_price" ColumnName="Purchase_price" />
+                <ScalarProperty Name="Retail_price" ColumnName="Retail_price" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="MyPCModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Repair" ColumnName="ID_Repair" />
+                <ScalarProperty Name="ID_Problem" ColumnName="ID_Problem" />
+                <ScalarProperty Name="ID_OrderingMaterial" ColumnName="ID_OrderingMaterial" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ID_Status" ColumnName="ID_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderingMaterials">
+            <EntityTypeMapping TypeName="MyPCModel.OrderingMaterial">
+              <MappingFragment StoreEntitySet="OrderingMaterial">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID_Material" ColumnName="ID_Material" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -538,11 +615,20 @@
             <EntityTypeMapping TypeName="MyPCModel.Repair">
               <MappingFragment StoreEntitySet="Repair">
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WorkOrder" ColumnName="WorkOrder" />
                 <ScalarProperty Name="DateEvent" ColumnName="DateEvent" />
                 <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
                 <ScalarProperty Name="ID_Master" ColumnName="ID_Master" />
                 <ScalarProperty Name="ID_TypeDevice" ColumnName="ID_TypeDevice" />
                 <ScalarProperty Name="Information" ColumnName="Information" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="MyPCModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -561,16 +647,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TypeM" ColumnName="TypeM" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Works">
-            <EntityTypeMapping TypeName="MyPCModel.Work">
-              <MappingFragment StoreEntitySet="Work">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ID_Repair" ColumnName="ID_Repair" />
-                <ScalarProperty Name="ID_Material" ColumnName="ID_Material" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

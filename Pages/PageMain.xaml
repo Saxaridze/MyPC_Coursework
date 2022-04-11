@@ -9,6 +9,27 @@
       Title="Главная">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel  Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button x:Name="BtnRepair" Click="BtnRepair_Click" Style="{StaticResource MenuButton}">Ремонт</Button>
+        </StackPanel>
+        <StackPanel  Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="BtnClient" Click="BtnClient_Click" Style="{StaticResource MenuButton}">Клиенты</Button>
+        </StackPanel>
+        <StackPanel  Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button x:Name="BtnStatistics" Click="BtnStatistics_Click"  Style="{StaticResource MenuButton}">Статистика</Button>
+        </StackPanel>
+        <StackPanel  Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button x:Name="BtnDirectory" Click="BtnDirectory_Click"  Style="{StaticResource MenuButton}">Справочники</Button>
+        </StackPanel>
     </Grid>
 </Page>

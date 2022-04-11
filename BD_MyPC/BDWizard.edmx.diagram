@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2c925ce8bc7f4b91a43cf9a4d2eb7a69" Name="Diagram1">
+        <EntityTypeShape EntityType="MyPCModel.Client" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Master" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Material" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Order" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.OrderingMaterial" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Problem" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Repair" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.Status" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.TypeDevice" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyPCModel.TypeMaterial" Width="1.5" PointX="1.5" PointY="18" IsExpanded="true" />
+        <AssociationConnector Association="MyPCModel.FK_Repair_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Repair_Master" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Material_TypeMaterial" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_OrderingMaterial_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Order_OrderingMaterial" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Order_Problem" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Order_Repair" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Order_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="MyPCModel.FK_Repair_TypeDevice" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

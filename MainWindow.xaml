@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyPC"
         mc:Ignorable="d"
-        Title="MyPC" Height="600" Width="800" Icon="mini_logo.jpg">
+        Title="Wizard" Height="600" Width="800" Icon="mini_logo.jpg">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
@@ -16,8 +16,8 @@
             <Rectangle Fill="{StaticResource ColorMain}"></Rectangle>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  FontWeight="Bold" Text="{Binding ElementName=MainFrame, Path=Content.Title}" FontSize="30"></TextBlock>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <Image Source="Resources/logo.jpg" ></Image>
-                <TextBlock FontWeight="Bold" FontSize="20" VerticalAlignment="Center">MyPC</TextBlock>
+                <Image Source="Resources/Wizard.jpg" Width="250" Height="79" ></Image>
+                
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button x:Name="BtnBack" Click="BtnBack_Click" Margin="0 0 10 0" Height="30" Width="100" Background="#FFD30B0B">Назад</Button>
